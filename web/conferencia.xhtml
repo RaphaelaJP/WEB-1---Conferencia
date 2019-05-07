@@ -1,0 +1,53 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+    <h:body>
+        <h:form id="form1">
+            <p:panel id="pnCadastrar" header="Cadastrar Conferência" >
+                <h:inputHidden value="#{conferenciaMB.conferencia.con_id}" />
+                <p:panelGrid columns="2" id="campos">                    
+                    <p:outputLabel value="Nome:"/> 
+                    <p:inputText value="#{conferenciaMB.conferencia.con_nome}"/>
+                    <p:outputLabel value="ID sala:"/> 
+                    <p:inputText value="#{conferenciaMB.conferencia.con_id_sala}" disabled="true"/>                    
+                    <p:outputLabel for="data" value="Data Conferência"/>
+                    <p:calendar id="data" value="#{conferenciaMB.conferencia.con_data}" showOn="button" mask="99/99/99">
+                        <f:convertDateTime pattern="dd/MM/yy" timeZone="GMT-3" locale="pt_BR"/> 
+                    </p:calendar>                    
+                    <h:commandButton value="Salvar" action="#{conferenciaMB.cadastrarAction()}"/>     
+                </p:panelGrid>
+            </p:panel>
+
+            <p:panel id="pnConsulta" header="Lista de conferência">                
+                <p:dataTable var="conf" value="#{conferenciaMB.listaConferenciaPorUsuario}" id="lista">
+                    <p:column headerText="Id Sala">
+                        <h:outputText value="#{conf.con_id_sala}" />
+                    </p:column>
+                    <p:column headerText="Nome">
+                        <h:outputText value="#{conf.con_nome}" />
+                    </p:column>
+                    <p:column headerText="Data Conferência">
+                        <h:outputText value="#{conf.con_data}">
+                            <f:convertDateTime pattern="dd/MM/yyyy"/>
+                        </h:outputText>
+                    </p:column>                    
+                    <p:column>
+                        <h:commandButton value="Alterar" action="#{conferenciaMB.alterar(conf)}"  />
+                    </p:column>
+                    <p:column>
+                        <h:commandButton value="Delete" action="#{conferenciaMB.deletar(conf)}"  />
+                    </p:column>
+                </p:dataTable>                
+            </p:panel>
+        </h:form>
+    </h:body>
+    <h:outputLink value="usuariosMenu.xhtml" >
+        Voltar            
+    </h:outputLink>      
+</html>

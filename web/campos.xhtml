@@ -1,0 +1,48 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+    <h:body>
+        <h:form id="form1">
+            <p:panel id="pnCadastrar" header="Cadastrar Campos" >
+                <h:inputHidden value="#{camposMB.campos.cam_id}" />
+                <p:panelGrid columns="2" id="campos">                    
+                    <p:outputLabel value="Nome:"/> 
+                    <p:inputText value="#{camposMB.campos.cam_nome}"/>
+                    <p:outputLabel value="Instituição:"/> 
+                    <h:selectOneMenu value="#{camposMB.campos.instituicao.ins_id}">                                                
+                        <f:selectItems value="#{camposMB.selectListInstituto()}" />
+                    </h:selectOneMenu>
+                    
+                    <h:commandButton value="Salvar" action="#{camposMB.cadastrarAction()}"/>                                       
+                </p:panelGrid>
+            </p:panel>
+
+            <p:panel id="pnConsulta" header="Lista de campos">                
+                <p:dataTable var="camp" value="#{camposMB.allCampos}" id="lista" >
+                    <p:column headerText="Nome">
+                        <h:outputText value="#{camp.cam_nome}" />
+                    </p:column>
+                    <p:column headerText="Instituto">
+                        <h:outputText value="#{camp.instituicao.ins_nome}" />
+                    </p:column>                    
+                    <p:column>
+                        <h:commandButton value="Alterar" action="#{camposMB.alterar(camp)}"  />
+                    </p:column>
+                    <p:column>
+                        <h:commandButton value="Delete" action="#{camposMB.deletar(camp)}"  />
+                    </p:column>
+                </p:dataTable>                
+            </p:panel>
+        </h:form>
+    </h:body>
+    <h:outputLink value="administrador.xhtml" >
+        Voltar            
+    </h:outputLink>      
+</html>
+

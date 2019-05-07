@@ -1,0 +1,78 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+    <h:body>
+        <p:messages id="messages"/>
+        <h:form id="form1">
+            <p:panel id="pnCadastrar" header="Cadastro de usuários" >
+                <h:inputHidden value="#{usuarioMB.usuario.usr_id}" />
+                <p:panelGrid columns="2" id="usuario">                    
+
+                    <p:outputLabel value="Instituição:"/> 
+                    <h:selectOneMenu value="#{usuarioMB.usuario.campo.instituicao.ins_id}" >
+                        <f:selectItems value="#{usuarioMB.selectListInstituto()}"  />
+                        <p:ajax process="@this" update="pnCadastrar"/> 
+                    </h:selectOneMenu>
+
+                                                
+                    <p:outputLabel value="Campos:" /> 
+                    <h:selectOneMenu value="#{usuarioMB.usuario.campo.cam_id}" id="selectCampos">
+                        <f:selectItems value="#{usuarioMB.selectListCampos()}" />                        
+                    </h:selectOneMenu>
+                    
+                    
+                    
+                    <p:outputLabel value="Tipo Usuario:"/> 
+                    <h:selectOneMenu value="#{usuarioMB.usuario.userType.usr_typ_id}">
+                        <f:selectItems value="#{userTypeMB.selectList()}" />
+                    </h:selectOneMenu>
+                    <p:outputLabel value="Nome:"/> 
+                    <p:inputText value="#{usuarioMB.usuario.usr_nome}"/>
+                    <p:outputLabel value="E-mail:"/> 
+                    <p:inputText value="#{usuarioMB.usuario.usr_email}"/>
+                    <p:outputLabel value="Senha:"/> 
+                    <p:inputText value="#{usuarioMB.usuario.usr_password}"/>                                       
+                    <p:outputLabel value="Status:"/> 
+                    <h:selectOneRadio value="#{usuarioMB.usuario.usr_status}">
+                        <f:selectItem itemValue="true" itemLabel="Sim"  />
+                        <f:selectItem itemValue="false" itemLabel="Não" />
+                    </h:selectOneRadio>                    
+                    <h:commandButton value="Salvar" action="#{usuarioMB.cadastrarAction()}" />                    
+                </p:panelGrid>
+            </p:panel>
+
+            <p:panel id="pnConsulta" header="Lista de usuários">                
+                <p:dataTable var="usr" value="#{usuarioMB.lista}" id="listaUsuario" rows="5" paginator="true">
+                    <p:column headerText="Nome">
+                        <h:outputText value="#{usr.usr_nome}" />
+                    </p:column>
+                    <p:column headerText="E-mail">
+                        <h:outputText value="#{usr.usr_email}" />
+                    </p:column>                    
+                    <p:column headerText="Tipo Usuario">
+                        <h:outputText value="#{usr.userType.usr_typ_nome}" />
+                    </p:column>                                        
+                    <p:column headerText="Instituto">
+                        <h:outputText value="#{usr.campo.instituicao.ins_nome} - #{usr.campo.cam_nome}" />
+                    </p:column>                    
+                    <p:column>
+                        <h:commandButton value="Alterar" action="#{usuarioMB.alterar(usr)}"  />
+                    </p:column>
+                    <p:column>
+                        <h:commandButton value="Delete" action="#{usuarioMB.deletar(usr)}"  />
+                    </p:column>
+                </p:dataTable>                
+            </p:panel>
+        </h:form>
+    </h:body>
+    <h:outputLink value="administrador.xhtml" >
+        Voltar            
+    </h:outputLink>      
+</html>
+
